@@ -11,24 +11,40 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  String apiLink = 'https://reqres.in/api/users/2';
-  Map? mapResponse;
-  Future apiIntegration() async {
+  String apiLink1 = 'https://reqres.in/api/users/2';
+  String apiLink2 = 'https://reqres.in/api/users?page=2';
+  Map? singleUserResponse;
+  Map? singleUserData;
+  Map? listUserResponse;
+  Future singleUser() async {
     http.Response response;
-    response = await http.get(Uri.parse(apiLink));
+    response = await http.get(Uri.parse(apiLink1));
     if (response.statusCode == 200) {
       setState(() {
-        mapResponse = json.decode(response.body);
-        print(mapResponse);
+        singleUserResponse = json.decode(response.body);
+        singleUserData = singleUserResponse!['data'];
       });
     } else {
       return null;
     }
   }
 
+  //Listed api integration
+  Future listUsers() async {
+    http.Response response;
+    response = await http.get(Uri.parse(apiLink2));
+    if (response.statusCode == 200) {
+      print(response.body);
+      setState(() {
+        listUserResponse = json.decode(response.body);
+      });
+    }
+  }
+
   @override
   void initState() {
-    apiIntegration();
+    singleUser();
+    listUsers();
     super.initState();
   }
 
@@ -55,6 +71,7 @@ class _HomePageState extends State<HomePage> {
             const SizedBox(
               height: 30,
             ),
+            // Single User
             Container(
               height: 250,
               width: MediaQuery.of(context).size.width,
@@ -64,7 +81,7 @@ class _HomePageState extends State<HomePage> {
                 color: Colors.blue,
               ),
               child: Center(
-                child: mapResponse == null
+                child: singleUserData == null
                     ? SizedBox(
                         width: 200,
                         child: Column(
@@ -91,40 +108,22 @@ class _HomePageState extends State<HomePage> {
                         ),
                       )
                     : Container(
-                        padding: const EdgeInsets.all(10),
+                        width: double.infinity,
+                        height: double.infinity,
                         decoration: BoxDecoration(
                           color: Colors.blue[400],
                           borderRadius: BorderRadius.circular(30),
                         ),
                         child: Column(
                           children: [
-                            // CachedNetworkImage(
-                            //   imageUrl: mapResponse!['data']['avatar'].toString(),
-                            //   imageBuilder: (context, imageProvider) => Container(
-                            //     height: 150,
-                            //     width: 150,
-                            //     decoration: BoxDecoration(
-                            //       image: DecorationImage(
-                            //           image: imageProvider,
-                            //           fit: BoxFit.cover,
-                            //           colorFilter: const ColorFilter.mode(
-                            //               Colors.red, BlendMode.colorBurn)),
-                            //     ),
-                            //   ),
-                            //   placeholder: (context, url) =>
-                            //       const CircularProgressIndicator(),
-                            //   errorWidget: (context, url, error) =>
-                            //       const Icon(Icons.error),
-                            // ),
                             Container(
                               height: 100,
                               width: 100,
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(50),
                                   image: DecorationImage(
-                                    image: NetworkImage(mapResponse!['data']
-                                            ['avatar']
-                                        .toString()),
+                                    image: NetworkImage(
+                                        singleUserData!['avatar'].toString()),
                                     fit: BoxFit.cover,
                                   )),
                             ),
@@ -132,9 +131,9 @@ class _HomePageState extends State<HomePage> {
                               height: 20,
                             ),
                             Text(
-                              mapResponse!['data']['first_name'].toString() +
+                              singleUserData!['first_name'].toString() +
                                   ' ' +
-                                  mapResponse!['data']['last_name'].toString(),
+                                  singleUserData!['last_name'].toString(),
                               style: const TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.w500,
@@ -142,7 +141,7 @@ class _HomePageState extends State<HomePage> {
                               ),
                             ),
                             Text(
-                              mapResponse!['data']['email'].toString(),
+                              singleUserData!['email'].toString(),
                               style: const TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.w500,
@@ -153,7 +152,52 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
               ),
-            )
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            const SizedBox(
+              height: 30,
+              child: Text("List of user's"),
+            ),
+            // List User
+            Container(
+              height: 120,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: Colors.pinkAccent,
+              ),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: Row(
+                  children: [
+                    Container(
+                      height: 100,
+                      width: 100,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(50),
+                        color: Colors.white,
+                        image: const DecorationImage(
+                            image: AssetImage(''), fit: BoxFit.cover),
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 20,
+                    ),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        Text('name'),
+                        Text('email'),
+                        Text('email'),
+                        Text('Id no:'),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
           ],
         ),
       ),
