@@ -1,50 +1,38 @@
 import 'dart:convert';
-import 'package:cached_network_image/cached_network_image.dart';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+class SingleUserPage extends StatefulWidget {
+  const SingleUserPage({Key? key}) : super(key: key);
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  _SingleUserPageState createState() => _SingleUserPageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _SingleUserPageState extends State<SingleUserPage> {
   String apiLink1 = 'https://reqres.in/api/users/2';
-  String apiLink2 = 'https://reqres.in/api/users?page=2';
+
   Map? singleUserResponse;
   Map? singleUserData;
-  Map? listUserResponse;
+
   Future singleUser() async {
     http.Response response;
     response = await http.get(Uri.parse(apiLink1));
     if (response.statusCode == 200) {
       setState(() {
-        singleUserResponse = json.decode(response.body);
-        singleUserData = singleUserResponse!['data'];
+        singleUserResponse = json.decode(response.body); //main or parent map
+        singleUserData = singleUserResponse!['data']; //child map
       });
     } else {
       return null;
     }
   }
 
-  //Listed api integration
-  Future listUsers() async {
-    http.Response response;
-    response = await http.get(Uri.parse(apiLink2));
-    if (response.statusCode == 200) {
-      print(response.body);
-      setState(() {
-        listUserResponse = json.decode(response.body);
-      });
-    }
-  }
-
   @override
   void initState() {
     singleUser();
-    listUsers();
+
     super.initState();
   }
 
@@ -151,51 +139,6 @@ class _HomePageState extends State<HomePage> {
                           ],
                         ),
                       ),
-              ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            const SizedBox(
-              height: 30,
-              child: Text("List of user's"),
-            ),
-            // List User
-            Container(
-              height: 120,
-              width: double.infinity,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: Colors.pinkAccent,
-              ),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: Row(
-                  children: [
-                    Container(
-                      height: 100,
-                      width: 100,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(50),
-                        color: Colors.white,
-                        image: const DecorationImage(
-                            image: AssetImage(''), fit: BoxFit.cover),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 20,
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
-                        Text('name'),
-                        Text('email'),
-                        Text('email'),
-                        Text('Id no:'),
-                      ],
-                    ),
-                  ],
-                ),
               ),
             ),
           ],
