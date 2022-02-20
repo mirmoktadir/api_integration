@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 class UserListController extends GetxController {
   var isLoading = false.obs;
   var userList = <Users>[].obs;
+
   @override
   void onInit() {
     getUserList();
@@ -16,6 +17,7 @@ class UserListController extends GetxController {
       var users = await UserListServices.userList();
       if (users != null) {
         userList.value = users.data!;
+        update();
       }
       update();
     } finally {

@@ -11,7 +11,7 @@ class DynamicSingleUserPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.blue[50],
       appBar: AppBar(
-        title: const Text('Data from net'),
+        title: const Text('Flutter API Integration'),
         centerTitle: true,
         elevation: 0,
       ),
@@ -70,17 +70,27 @@ class DynamicSingleUserPage extends StatelessWidget {
                               ),
                               child: Column(
                                 children: [
-                                  Container(
-                                    height: 100,
-                                    width: 100,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(50),
-                                        image: DecorationImage(
-                                          image: NetworkImage(
-                                              user.avatar.toString()),
-                                          fit: BoxFit.cover,
-                                        )),
-                                  ),
+                                  user.avatar.isEmpty
+                                      ? const SizedBox(
+                                          width: 200,
+                                          child: Center(
+                                            child: CircularProgressIndicator(
+                                              color: Colors.redAccent,
+                                            ),
+                                          ),
+                                        )
+                                      : Container(
+                                          height: 100,
+                                          width: 100,
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(50),
+                                              image: DecorationImage(
+                                                image: NetworkImage(
+                                                    user.avatar.toString()),
+                                                fit: BoxFit.cover,
+                                              )),
+                                        ),
                                   const SizedBox(
                                     height: 20,
                                   ),

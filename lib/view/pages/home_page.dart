@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
 
-import '../dynamic_page/dynamic_single_user_page.dart';
-import 'list_user_page.dart';
+import 'dynamic_page/dynamic_single_user_page.dart';
+import 'static_page/list_user_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -21,7 +21,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       backgroundColor: Colors.blue[50],
       appBar: AppBar(
-        title: const Text('Data from net'),
+        title: const Text('Flutter API Integration'),
         centerTitle: true,
         elevation: 0,
       ),
@@ -31,28 +31,51 @@ class _HomePageState extends State<HomePage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const Text(
-                'Api Integration',
-                style: TextStyle(
-                    color: Colors.blue,
-                    fontWeight: FontWeight.w500,
-                    fontSize: 24),
+              Container(
+                height: 150,
+                width: 150,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    image: const DecorationImage(
+                        image: AssetImage('assets/images/person.jpg'),
+                        fit: BoxFit.cover)),
               ),
               const SizedBox(
-                height: 100,
+                height: 20,
+              ),
+              Column(
+                children: const [
+                  Text(
+                    'Mir Moktadir',
+                    style: TextStyle(
+                        color: Colors.blue,
+                        fontWeight: FontWeight.w500,
+                        fontSize: 24),
+                  ),
+                  Text(
+                    'Senior Flutter Developer',
+                    style: TextStyle(
+                        color: Colors.blue,
+                        fontWeight: FontWeight.w500,
+                        fontSize: 16),
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 60,
               ),
               // Single User
 
-              TextButton(
+              ElevatedButton(
                 onPressed: () {
                   Get.to(const SingleUserPage());
                 },
                 child: const Text('Single User (Hard code)'),
               ),
               const SizedBox(
-                height: 20,
+                height: 5,
               ),
-              TextButton(
+              ElevatedButton(
                 onPressed: () {
                   Get.to(const ListUserPage());
                 },
@@ -60,19 +83,25 @@ class _HomePageState extends State<HomePage> {
               ),
 
               const SizedBox(
-                height: 20,
+                height: 30,
               ),
-              TextButton(
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.red,
+                ),
                 onPressed: () {
                   Get.to(DynamicSingleUserPage());
                 },
                 child: const Text('Single User (GetX MVC)'),
               ),
               const SizedBox(
-                height: 20,
+                height: 5,
               ),
 
-              TextButton(
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.red,
+                ),
                 onPressed: () {
                   Get.to(DynamicUsersPage());
                 },

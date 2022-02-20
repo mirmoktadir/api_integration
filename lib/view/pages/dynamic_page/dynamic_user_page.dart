@@ -10,33 +10,59 @@ class DynamicUsersPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.blue[50],
       appBar: AppBar(
-        title: const Text('Data from net'),
+        title: const Text('Flutter API Integration'),
         centerTitle: true,
         elevation: 0,
       ),
       body: GetBuilder<UserListController>(
           init: UserListController(),
           builder: (users) {
-            return ListView.builder(
-                itemCount: users.userList.length,
-                itemBuilder: (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.all(8.0),
+            return users == null
+                ? SizedBox(
+                    width: 200,
                     child: Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Image.network(
-                              users.userList[index].avatar.toString()),
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: const [
+                        CircularProgressIndicator(
+                          color: Colors.white,
                         ),
-                        Text(users.userList[index].id.toString()),
-                        Text(users.userList[index].email.toString()),
-                        Text(users.userList[index].firstName.toString()),
-                        Text(users.userList[index].lastName.toString()),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Center(
+                          child: Text(
+                            'Data is Loading..',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 24,
+                            ),
+                          ),
+                        ),
                       ],
                     ),
-                  );
-                });
+                  )
+                : ListView.builder(
+                    itemCount: users.userList.length,
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Image.network(
+                                  users.userList[index].avatar.toString()),
+                            ),
+                            Text(users.userList[index].id.toString()),
+                            Text(users.userList[index].email.toString()),
+                            Text(users.userList[index].firstName.toString()),
+                            Text(users.userList[index].lastName.toString()),
+                          ],
+                        ),
+                      );
+                    });
           }),
     );
   }

@@ -41,7 +41,7 @@ class _SingleUserPageState extends State<SingleUserPage> {
     return Scaffold(
       backgroundColor: Colors.blue[50],
       appBar: AppBar(
-        title: const Text('Data from net'),
+        title: const Text('Flutter API Integration'),
         centerTitle: true,
         elevation: 0,
       ),
@@ -49,16 +49,6 @@ class _SingleUserPageState extends State<SingleUserPage> {
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         child: Column(
           children: [
-            const Text(
-              'Api Integration',
-              style: TextStyle(
-                  color: Colors.blue,
-                  fontWeight: FontWeight.w500,
-                  fontSize: 24),
-            ),
-            const SizedBox(
-              height: 30,
-            ),
             // Single User
             Container(
               height: 250,

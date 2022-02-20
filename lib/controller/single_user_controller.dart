@@ -21,9 +21,12 @@ class SingleUserController extends GetxController {
         first_name = user.data!.firstName!;
         last_name = user.data!.lastName!;
         avatar = user.data!.avatar!;
+        update();
       }
+      update();
     } finally {
       isLoading(true);
+      update();
     }
   }
 }

@@ -39,7 +39,7 @@ class _ListUserPageState extends State<ListUserPage> {
     return Scaffold(
       backgroundColor: Colors.blue[50],
       appBar: AppBar(
-        title: const Text('Data from net'),
+        title: const Text('Flutter API Integration'),
         centerTitle: true,
         elevation: 0,
       ),
